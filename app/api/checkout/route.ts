@@ -37,12 +37,8 @@ export async function POST(req: Request) {
         }
 
         // 3. CREATE STRIPE CHECKOUT SESSION
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL 
-            ? `https://${process.env.VERCEL_URL}` 
-            : 'http://localhost:3000';
-        
-        const successUrl = process.env.STRIPE_SUCCESS_URL || `${baseUrl}/checkout/success`;
-        const cancelUrl = process.env.STRIPE_CANCEL_URL || `${baseUrl}/checkout/cancel`;
+        const successUrl = process.env.STRIPE_SUCCESS_URL || 'https://smart-prints-uk.vercel.app/checkout/success';
+        const cancelUrl = process.env.STRIPE_CANCEL_URL || 'https://smart-prints-uk.vercel.app/checkout/cancel';
         
         console.log(`[Checkout] Using URLs - Success: ${successUrl}, Cancel: ${cancelUrl}`);
         
