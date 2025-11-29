@@ -37,7 +37,8 @@ export async function POST(req: Request) {
         }
 
         // 3. CREATE STRIPE CHECKOUT SESSION
-        const successUrl = process.env.STRIPE_SUCCESS_URL || 'https://smart-prints-uk.vercel.app/checkout/success';
+        const baseSuccessUrl = process.env.STRIPE_SUCCESS_URL || 'https://smart-prints-uk.vercel.app/checkout/success';
+        const successUrl = `${baseSuccessUrl}?plan=${planId}`;
         const cancelUrl = process.env.STRIPE_CANCEL_URL || 'https://smart-prints-uk.vercel.app/checkout/cancel';
         
         console.log(`[Checkout] Using URLs - Success: ${successUrl}, Cancel: ${cancelUrl}`);
