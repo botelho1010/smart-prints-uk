@@ -37,6 +37,15 @@ export async function POST(req: Request) {
         }
 
         // 3. CREATE STRIPE CHECKOUT SESSION
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}` 
+            : 'http://localhost:3000';
+        
+        const successUrl = process.env.STRIPE_SUCCESS_URL || `${baseUrl}/checkout/success`;
+        const cancelUrl = process.env.STRIPE_CANCEL_URL || `${baseUrl}/checkout/cancel`;
+        
+        console.log(`[Checkout] Using URLs - Success: ${successUrl}, Cancel: ${cancelUrl}`);
+        
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -46,8 +55,8 @@ export async function POST(req: Request) {
                 },
             ],
             mode: 'subscription',
-            success_url: process.env.STRIPE_SUCCESS_URL || 'http://localhost:3000/dashboard?success=true',
-            cancel_url: process.env.STRIPE_CANCEL_URL || 'http://localhost:3000/',
+            success_url: successUrl,
+            cancel_url: cancelUrl,
             metadata: {
                 clerkId,  // ✅ CRITICAL: Pass clerkId for webhook
                 plan: planId,
