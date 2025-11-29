@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - tracks subscription plan and Stripe info
+model User {
+  id               String        @id @default(cuid())
+  clerkId          String        @unique // Clerk user ID
+  email            String?
+  plan             String        @default("free") // 'free', 'basic', 'plus'
+  stripeCustomerId String?       @unique
+  
+  // Total usage for FREE users (never resets)
+  freeGenerationsUsed Int        @default(0)
+  
+  // Subscription period tracking for paid users
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  
+  dailyUsage       DailyUsage[]
+  monthlyUsage     MonthlyUsage[]
+  activities       Activity[]
+}
+
+// DailyUsage model - tracks daily generation counts per user (legacy, keep for now)
+model DailyUsage {
+  id             String   @id @default(cuid())
+  userId         String
+  date           String   // YYYY-MM-DD format for easy daily resets
+  colouringCount Int      @default(0)
+  drawingCount   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+// MonthlyUsage model - tracks monthly generation counts for paid users
+model MonthlyUsage {
+  id             String   @id @default(cuid())
+  userId         String
+  month          String   // YYYY-MM format
+  generationCount Int     @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, month])
+  @@index([userId, month])
+}
+
+// Activity model - stores generated activities for history
+model Activity {
+  id            String   @id @default(cuid())
+  userId        String
+  childName     String
+  ageGroup      String
+  topic         String
+  activityType  String   // 'colouring', 'drawing', 'maze', 'connect-dots'
+  title         String
+  content       String
+  imageBase64   String?  // Store the generated image (optional, can be large)
+  imageUrl      String?  // Or store URL if we move to cloud storage
+  createdAt     DateTime @default(now())
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, createdAt])
+}
