@@ -22,12 +22,21 @@ export function Footer() {
                         </div>
                     </div>
 
-                    <div className="md:col-start-4">
-                        <h4 className="font-semibold mb-4">Company</h4>
+                    <div>
+                        <h4 className="font-semibold mb-4">Legal</h4>
                         <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><a href="mailto:support@smartprints.uk" className="hover:text-primary transition-colors">Contact Support</a></li>
-                            <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
                             <li><Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link></li>
+                            <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="/refund" className="hover:text-primary transition-colors">Refund Policy</Link></li>
+                            <li><Link href="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="font-semibold mb-4">Support</h4>
+                        <ul className="space-y-3 text-sm text-muted-foreground">
+                            <li><a href="mailto:support@smartprintsuk.com" className="hover:text-primary transition-colors">Contact Us</a></li>
+                            <li><Link href="/support" className="hover:text-primary transition-colors">Help Centre</Link></li>
                         </ul>
                     </div>
                 </div>
