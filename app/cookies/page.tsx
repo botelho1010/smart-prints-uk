@@ -137,7 +137,7 @@ export default function CookiesPage() {
                             </a>
                         </p>
                     </section>
-                </div>
+                </div>ok
             </main>
 
             <footer className="border-t border-gray-800 py-8 mt-12">
