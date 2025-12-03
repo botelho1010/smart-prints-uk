@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUserPlan } from '@/hooks/useUserPlan';
+import { Footer } from '@/components/landing/footer';
 import jsPDF from 'jspdf';
 
 export default function Home() {
@@ -595,6 +596,8 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

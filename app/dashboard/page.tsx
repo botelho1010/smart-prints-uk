@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useClerk } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useUserPlan } from '@/hooks/useUserPlan';
+import { Footer } from '@/components/landing/footer';
 import jsPDF from 'jspdf';
 
 interface Activity {
@@ -333,6 +334,8 @@ export default function Dashboard() {
                     )}
                 </div>
             </main>
+
+            <Footer />
         </div>
     );
 }

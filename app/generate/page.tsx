@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { Footer } from '@/components/landing/footer';
 import jsPDF from 'jspdf';
 
 export default function Home() {
@@ -524,6 +525,8 @@ export default function Home() {
 
                 </div>
             </main>
+
+            <Footer />
         </div>
     );
 }
